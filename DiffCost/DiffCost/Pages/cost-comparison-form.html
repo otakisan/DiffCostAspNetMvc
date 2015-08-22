@@ -1,0 +1,79 @@
+<div ng-submit="costComparisonForm.$valid && costComparison.submitForm()">
+	<h4>{{costComparison.pageTitle}} <i ng-show="costComparison.waiting" class="fa fa-spinner fa-spin"></i></h4>	
+	<hr>
+	<form name="costComparisonForm" novalidate>
+		<div>
+			<h6>{{costComparison.userId}}</h6>
+		</div>
+		<select ng-model="costComparison.selectedProject" ng-change="costComparison.changedSelectedProject()" ng-options="c.ProjectName as c.ProjectName for c in costComparison.projects"></select>
+		<button class="btn-sm btn-primary" type="submit" ng-class="{'btn': true }" >表示</button>
+		<!-- <button type="button" ng-class="{'btn': true }" ng-click="costComparison.downloadCsv()">CSV出力</button> -->
+		<a ng-href="{{costComparison.csvUrl}}">CSV出力</a>
+	</form>
+	<br>
+	<div>
+		<table class="table">
+			<tbody>
+				<tr>
+					<th>案件名</th>
+					<td>{{costComparison.getProjectNameText()}}</td>
+				</tr>
+				<tr>
+					<th>工数</th>
+					<td>{{costComparison.getTotalManDayText()}}</td>
+				</tr>
+				<tr>
+					<th>見積期間</th>
+					<td>{{costComparison.getQuotationTermText()}}</td>
+				</tr>
+				<tr>
+					<th>実績期間</th>
+					<td>{{costComparison.getFactTermText()}}</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<div class="row">
+		<div class="col-lg-6 col-xs-12">
+			<table class="table">
+				<thead>
+					<tr>
+						<th ng-hide="true">案件名</th>
+						<th>見積内容</th>
+						<th>工数（人日）</th>
+						<th>見積日時</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="quotation in costComparison.costComparisonResult.quotations">
+						<td ng-hide="true">{{quotation.ProjectName}}</td>
+						<td>{{quotation.QuotationText}}</td>
+						<td>{{quotation.ManDay}}</td>
+						<td>{{quotation.UpdatedAt | date: 'yyyy-MM-dd HH:mm:ss'}}</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div class="col-lg-6 col-xs-12">
+			<table class="table">
+				<thead>
+					<tr>
+						<th ng-hide="true">案件名</th>
+						<th>実績内容</th>
+						<th>工数（人日）</th>
+						<th>実績日時</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="fact in costComparison.costComparisonResult.facts">
+						<td ng-hide="true">{{fact.ProjectName}}</td>
+						<td>{{fact.FactText}}</td>
+						<td>{{fact.ManDay}}</td>
+						<td>{{fact.UpdatedAt | date: 'yyyy-MM-dd HH:mm:ss'}}</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	
+</div>

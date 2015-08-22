@@ -1,0 +1,17 @@
+<div>
+	<h3>{{diffCost.appTitle}}</h3>
+	<div ng-submit="entryForm.$valid && diffCost.submitForm()">
+		<h4>{{diffCost.pageTitle}}</h4>
+		<hr>
+		<form name="entryForm" novalidate>
+			<div>
+				<h6>{{diffCost.userId}}</h6>
+			</div>
+			<select ng-model="diffCost.entityTarget" ng-options="c.value as c.name for c in diffCost.entityTargets"></select>
+			<input name="textCtrl" type="text" ng-model="diffCost.userText" placeholder="入力してください" size="30" ng-class="{'text-danger':diffCost.userText.length > 5}"
+			required>
+			<button type="submit" ng-class="{'btn': true, 'btn-primary': diffCost.userText.length > 0}" value="登録">登録</button>
+			<input type="hidden" ng-model="diffCost.userTableId">
+		</form>
+	</div>
+</div>
